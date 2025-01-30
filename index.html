@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Player</title>
+    <link
+      rel="shortcut icon"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=="
+      type="image/x-icon"
+    />
+    <style>
+      iframe[id^='sb__open-sandbox'] {
+        top: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://player.kinescope.dev/v2.151.5&watermak=tesing.com/elements/kinescope-iframe-player.js"></script>
+    <!-- <script src="https://player.kinescope.io/latest/elements/kinescope-iframe-player.js"></script> -->
+
+    <script>
+      window.KinescopeIframePlayerConfig = {
+        ...window.KinescopeIframePlayerConfig,
+        player: {
+          behavior: {
+            localStorage: false,
+          },
+          ui: { playbackRateButton: true },
+        },
+      };
+    </script>
+
+    <kinescope-iframe-player
+      id="player"
+      t="3"
+      style="background-color: greenyellow; border-radius: 20px"
+    ></kinescope-iframe-player>
+
+    <script>
+      const playerEl = document.getElementById('player');
+
+      // Object.values(playerEl.Events).forEach((type) => {
+      //   playerEl.addEventListener(type, (event) => {
+      //     console.log(event);
+      //   });
+      // });
+
+      playerEl.setAttribute(
+        'url',
+        'https://kinescope.dev/oopuF93jHFNmjTtftaiV1B/'
+        // 'https://kinescope.io/nGnttRhDHufMwr8YZyEeYw'
+      );
+
+      (async () => {
+        const player = await playerEl.waitInstance();
+        console.log('waitInstance', player);
+      })();
+    </script>
+  </body>
+</html>
