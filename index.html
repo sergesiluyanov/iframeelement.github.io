@@ -2,10 +2,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Player</title>
+    <title>Player - Базовый тест</title>
     <link
       rel="shortcut icon"
-      href="http://example.com" referrerpolicy="origin"
+      href="http://example.com"
       type="image/x-icon"
     />
     <style>
@@ -16,7 +16,6 @@
   </head>
   <body>
     <script src="https://player.kinescope.dev/v2.164.2/elements/kinescope-iframe-player.js"></script>
-    <!-- <script src="https://player.kinescope.io/latest/elements/kinescope-iframe-player.js"></script> -->
 
     <script>
       window.KinescopeIframePlayerConfig = {
@@ -30,6 +29,7 @@
       };
     </script>
 
+    <!-- Без referrerpolicy - использует strict-origin-when-cross-origin по умолчанию -->
     <kinescope-iframe-player
       id="player"
       t="3"
@@ -38,22 +38,16 @@
 
     <script>
       const playerEl = document.getElementById('player');
-
-      // Object.values(playerEl.Events).forEach((type) => {
-      //   playerEl.addEventListener(type, (event) => {
-      //     console.log(event);
-      //   });
-      // });
-
+      
       playerEl.setAttribute(
         'url',
         'https://kinescope.dev/embed/scyyBw7LaySNJfcTRkqkyJ'
-        // 'https://kinescope.io/nGnttRhDHufMwr8YZyEeYw'
       );
 
       (async () => {
         const player = await playerEl.waitInstance();
         console.log('waitInstance', player);
+        console.log('Referrer Policy:', document.referrer);
       })();
     </script>
   </body>
