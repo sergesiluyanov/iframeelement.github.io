@@ -2,11 +2,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <!-- НЕсовместимая политика - может вызвать проблемы с Domain Restrictions -->
-    <meta/>
-    <title>Player - No referrer (тест ошибки)</title>
-    <link href="https://sergesiluyanov.github.io/iframeelement.github.io/" referrerpolicy="origin"
-    />
+    <title>Player - Referrer Policy на элементах</title>
+    <link 
+      rel="shortcut icon" 
+      href="https://sergesiluyanov.github.io/iframeelement.github.io/" 
+      referrerpolicy="origin"
+      type="image/x-icon" />
     <style>
       iframe[id^='sb__open-sandbox'] {
         top: 50%;
@@ -14,7 +15,10 @@
     </style>
   </head>
   <body>
-    <script src="https://player.kinescope.dev/v2.164.2/elements/kinescope-iframe-player.js"></script>
+    <script 
+      src="https://player.kinescope.dev/v2.164.2/elements/kinescope-iframe-player.js"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </script>
 
     <script>
       window.KinescopeIframePlayerConfig = {
@@ -31,8 +35,9 @@
     <kinescope-iframe-player
       id="player"
       t="3"
-      style="background-color: greenyellow; border-radius: 20px"
-    ></kinescope-iframe-player>
+      referrerpolicy="strict-origin-when-cross-origin"
+      style="background-color: greenyellow; border-radius: 20px">
+    </kinescope-iframe-player>
 
     <script>
       const playerEl = document.getElementById('player');
@@ -46,10 +51,9 @@
         try {
           const player = await playerEl.waitInstance();
           console.log('waitInstance', player);
-          console.log('Referrer Policy (no-referrer):', document.referrer);
+          console.log('Referrer Policy на элементе:', playerEl.getAttribute('referrerpolicy'));
         } catch (error) {
           console.error('Ошибка загрузки плеера:', error);
-          console.log('Это ожидаемо для no-referrer политики');
         }
       })();
     </script>
