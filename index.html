@@ -2,9 +2,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <!-- Альтернативная совместимая политика -->
-    <meta name="referrer" content="origin" />
-    <title>Player - Origin referrer</title>
+    <!-- НЕсовместимая политика - может вызвать проблемы с Domain Restrictions -->
+    <meta name="referrer" content="no-referrer" />
+    <title>Player - No referrer (тест ошибки)</title>
     <link
       rel="shortcut icon"
       href="http://example.com"
@@ -46,9 +46,14 @@
       );
 
       (async () => {
-        const player = await playerEl.waitInstance();
-        console.log('waitInstance', player);
-        console.log('Referrer Policy (origin):', document.referrer);
+        try {
+          const player = await playerEl.waitInstance();
+          console.log('waitInstance', player);
+          console.log('Referrer Policy (no-referrer):', document.referrer);
+        } catch (error) {
+          console.error('Ошибка загрузки плеера:', error);
+          console.log('Это ожидаемо для no-referrer политики');
+        }
       })();
     </script>
   </body>
