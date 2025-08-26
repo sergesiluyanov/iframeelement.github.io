@@ -2,9 +2,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <!-- Глобальная политика для всего документа -->
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Player - Meta referrer</title>
+    <!-- Альтернативная совместимая политика -->
+    <meta name="referrer" content="origin" />
+    <title>Player - Origin referrer</title>
     <link
       rel="shortcut icon"
       href="http://example.com"
@@ -48,7 +48,7 @@
       (async () => {
         const player = await playerEl.waitInstance();
         console.log('waitInstance', player);
-        console.log('Referrer Policy (meta):', document.referrer);
+        console.log('Referrer Policy (origin):', document.referrer);
       })();
     </script>
   </body>
