@@ -2,7 +2,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Player - Базовый тест</title>
+    <!-- Глобальная политика для всего документа -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Player - Meta referrer</title>
     <link
       rel="shortcut icon"
       href="http://example.com"
@@ -29,7 +31,6 @@
       };
     </script>
 
-    <!-- Без referrerpolicy - использует strict-origin-when-cross-origin по умолчанию -->
     <kinescope-iframe-player
       id="player"
       t="3"
@@ -47,7 +48,7 @@
       (async () => {
         const player = await playerEl.waitInstance();
         console.log('waitInstance', player);
-        console.log('Referrer Policy:', document.referrer);
+        console.log('Referrer Policy (meta):', document.referrer);
       })();
     </script>
   </body>
