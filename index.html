@@ -1,582 +1,76 @@
-<!DOCTYPE html>
-<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinescope Player - Яндекс Метрика интеграция</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .player-container {
-            margin: 20px 0;
-            text-align: center;
-        }
-        .controls {
-            margin: 20px 0;
-            text-align: center;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .status {
-            margin: 20px 0;
-            padding: 15px;
-            background: #e9ecef;
-            border-radius: 5px;
-            font-family: monospace;
-        }
-        .event-log {
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .event-item {
-            margin: 5px 0;
-            padding: 5px;
-            background: white;
-            border-left: 3px solid #007bff;
-            padding-left: 10px;
-        }
-        .config {
-            margin: 20px 0;
-            padding: 15px;
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-        }
-        input[type="text"] {
-            padding: 8px;
-            margin: 5px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            width: 200px;
-        }
-        label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Player - Referrer Policy на элементах</title>
+    <link 
+      rel="shortcut icon" 
+      href="https://sergesiluyanov.github.io/iframeelement.github.io/" 
+      referrerpolicy="origin"
+      type="image/x-icon" />
+    <title>testing</title>
+    <link rel="shortcut icon" href="https://example.com/favicon.ico" type="image/x-icon" />
+<style>
+      iframe[id^='sb__open-sandbox'] {
+        top: 50%;
+      }
+      iframe[id^='sb__open-sandbox'] { top: 50%; }
+      .status { padding: 10px; margin: 10px; border-radius: 5px; }
+      .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+      .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎬 Kinescope Player - Интеграция с Яндекс Метрикой</h1>
-        <p style="text-align: center; color: #666; margin-bottom: 20px;">
-            <strong>Автономная версия</strong> - без внешних скриптов, работает через iframe
-        </p>
-        
-        <div class="config">
-            <h3>⚙️ Настройки</h3>
-            <label for="counterId">ID счетчика Яндекс Метрики:</label>
-            <input type="text" id="counterId" value="12345678" placeholder="Введите ID счетчика">
-            <button onclick="initializeYM()">Инициализировать Яндекс Метрику</button>
-            <button onclick="initializePlayer()">Инициализировать плеер</button>
-        </div>
-
-        <div class="player-container">
-            <div id="player" style="display: none;"></div>
-            <!-- iframe плеер по умолчанию -->
-            <div id="iframePlayer">
-                <iframe 
-                    src="https://kinescope.dev/oak9QpYK2SdCoaWqDPh4n4?debug=1" 
-                    width="100%" 
-                    height="400px"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-
-        <div class="controls">
-            <button onclick="playVideo()">▶️ Воспроизвести</button>
-            <button onclick="pauseVideo()">⏸️ Пауза</button>
-            <button onclick="sendCustomEvent()">📊 Отправить кастомное событие</button>
-            <button onclick="testAllEvents()">🧪 Тест всех событий</button>
-            <button onclick="checkIntegrationStatus()">🔍 Проверить статус</button>
-            <button onclick="useIframePlayer()">🔄 Использовать iframe плеер</button>
-            <button onclick="clearLog()">🗑️ Очистить лог</button>
-        </div>
-
-        <div class="status">
-            <h3>📊 Статус интеграции</h3>
-            <div id="status">Не инициализировано</div>
-        </div>
-
-        <div class="event-log">
-            <h3>📝 Лог событий</h3>
-            <div id="eventLog">События будут отображаться здесь...</div>
-        </div>
+    <div class="status error">
+      <strong>Тест:</strong> referrerpolicy="no-referrer" - ❌ НЕ совместимо с Domain Restrictions
     </div>
 
-    <!-- Яндекс Метрика (замените на ваш код) -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+<script 
+src="https://player.kinescope.dev/v2.164.2/elements/kinescope-iframe-player.js"
+      referrerpolicy="strict-origin-when-cross-origin">
+      referrerpolicy="no-referrer">
+</script>
 
-        // Замените 12345678 на ваш реальный ID счетчика
-        ym(12345678, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-    </script>
+<script>
+window.KinescopeIframePlayerConfig = {
+...window.KinescopeIframePlayerConfig,
+player: {
+          behavior: {
+            localStorage: true,
+          },
+          behavior: { localStorage: true },
+ui: { playbackRateButton: true },
+},
+};
+@@ -35,25 +34,23 @@
+<kinescope-iframe-player
+id="player"
+t="3"
+      referrerpolicy="strict-origin-when-cross-origin"
+      style="background-color: greenyellow; border-radius: 20px">
+      referrerpolicy="no-referrer"
+      style="background-color: #f8d7da; border-radius: 20px; padding: 20px;">
+</kinescope-iframe-player>
 
-    <!-- Все внешние скрипты отключены - используем собственную реализацию -->
+<script>
+const playerEl = document.getElementById('player');
 
-    <script>
-        let player = null;
-        let ymIntegration = null;
-        let eventCounter = 0;
+      playerEl.setAttribute(
+        'url',
+        'https://kinescope.dev/embed/4v3Wqopuq4hhy1VhZH3GVU'
+      );
+      playerEl.setAttribute('url', 'https://kinescope.dev/embed/4v3Wqopuq4hhy1VhZH3GVU');
 
-        // Проверка загрузки скриптов
-        function checkScriptsLoaded() {
-            console.log('YM loaded:', typeof window.ym !== 'undefined');
-            
-            // Проверяем только Яндекс Метрику, так как используем iframe подход
-            if (typeof window.ym === 'undefined') {
-                console.error('Yandex Metrika not loaded');
-                return false;
-            }
-            
-            console.log('✅ Все необходимые скрипты загружены');
-            return true;
-        }
-
-        // Инициализация Яндекс Метрики
-        function initializeYM() {
-            const counterId = document.getElementById('counterId').value;
-            
-            if (!counterId) {
-                alert('Пожалуйста, введите ID счетчика Яндекс Метрики');
-                return;
-            }
-
-            // Имитация инициализации Яндекс Метрики
-            window.ym = window.ym || function(counterId, action, goal, params) {
-                console.log('YM Event:', { counterId, action, goal, params });
-                logEvent(`YM Event: ${action} - ${goal}`, params);
-                return true;
-            };
-
-            ymIntegration = {
-                trackEvent: function(eventName, eventData = {}) {
-                    window.ym(counterId, 'reachGoal', 'kinescope.video_event', {
-                        event: eventName,
-                        ...eventData
-                    });
-                }
-            };
-
-            updateStatus('✅ Яндекс Метрика инициализирована');
-            logEvent('Инициализация', { counterId });
-        }
-
-        // Инициализация плеера (iframe версия)
-        function initializePlayer() {
-            if (!ymIntegration) {
-                alert('Сначала инициализируйте Яндекс Метрику');
-                return;
-            }
-
-            // Проверяем загрузку скриптов
-            if (!checkScriptsLoaded()) {
-                updateStatus('❌ Яндекс Метрика не загружена. Проверьте загрузку скрипта.');
-                logEvent('Ошибка загрузки', { 
-                    ym: typeof window.ym !== 'undefined'
-                });
-                return;
-            }
-
-            try {
-                // Настраиваем отслеживание событий для iframe
-                setupIframeEventTracking();
-                
-                updateStatus('✅ iframe плеер инициализирован с интеграцией Яндекс Метрики');
-                logEvent('Инициализация iframe плеера', { videoId: 'oak9QpYK2SdCoaWqDPh4n4' });
-
-            } catch (error) {
-                updateStatus('❌ Ошибка инициализации плеера: ' + error.message);
-                logEvent('Ошибка', { error: error.message });
-            }
-        }
-
-        // Настройка обработчиков событий плеера
-        function setupPlayerEventHandlers() {
-            if (!player || !ymIntegration) return;
-
-            // События воспроизведения
-            player.on('play', () => {
-                ymIntegration.trackEvent('play');
-                logEvent('Событие: play');
-            });
-
-            player.on('pause', () => {
-                ymIntegration.trackEvent('pause');
-                logEvent('Событие: pause');
-            });
-
-            player.on('ended', () => {
-                ymIntegration.trackEvent('ended');
-                logEvent('Событие: ended');
-            });
-
-            player.on('loadstart', () => {
-                ymIntegration.trackEvent('loadstart');
-                logEvent('Событие: loadstart');
-            });
-
-            player.on('canplay', () => {
-                ymIntegration.trackEvent('canplay');
-                logEvent('Событие: canplay');
-            });
-
-            // Отслеживание прогресса
-            let progressEvents = {
-                25: false,
-                50: false,
-                75: false,
-                90: false
-            };
-
-            player.on('timeupdate', () => {
-                const currentTime = player.getCurrentTime();
-                const duration = player.getDuration();
-                const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-
-                // Отправляем события по прогрессу
-                Object.keys(progressEvents).forEach(percent => {
-                    if (progress >= percent && !progressEvents[percent]) {
-                        ymIntegration.trackEvent(`progress_${percent}`, { progress: percent });
-                        logEvent(`Событие: progress_${percent}%`);
-                        progressEvents[percent] = true;
-                    }
-                });
-            });
-
-            // Обработка ошибок
-            player.on('error', (error) => {
-                ymIntegration.trackEvent('video_error', { 
-                    errorCode: error.code,
-                    errorMessage: error.message 
-                });
-                logEvent('Событие: error', { error: error.message });
-            });
-        }
-
-        // Управление воспроизведением (для iframe)
-        function playVideo() {
-            if (!ymIntegration) {
-                alert('Сначала инициализируйте Яндекс Метрику');
-                return;
-            }
-            
-            // Отправляем событие play
-            ymIntegration.trackEvent('play');
-            logEvent('Событие: play (кнопка)');
-        }
-
-        function pauseVideo() {
-            if (!ymIntegration) {
-                alert('Сначала инициализируйте Яндекс Метрику');
-                return;
-            }
-            
-            // Отправляем событие pause
-            ymIntegration.trackEvent('pause');
-            logEvent('Событие: pause (кнопка)');
-        }
-
-        // Отправка кастомного события
-        function sendCustomEvent() {
-            if (!ymIntegration) {
-                alert('Яндекс Метрика не инициализирована');
-                return;
-            }
-
-            const eventData = {
-                customProperty: 'test_value',
-                timestamp: Date.now(),
-                userAction: 'manual_trigger'
-            };
-
-            ymIntegration.trackEvent('custom_test_event', eventData);
-            logEvent('Кастомное событие: custom_test_event', eventData);
-        }
-
-        // Тестирование всех событий
-        function testAllEvents() {
-            if (!ymIntegration) {
-                alert('Яндекс Метрика не инициализирована');
-                return;
-            }
-
-            const events = [
-                { name: 'play', data: {} },
-                { name: 'pause', data: {} },
-                { name: 'ended', data: {} },
-                { name: 'loadstart', data: {} },
-                { name: 'canplay', data: {} },
-                { name: 'progress_25', data: { progress: 25 } },
-                { name: 'progress_50', data: { progress: 50 } },
-                { name: 'progress_75', data: { progress: 75 } },
-                { name: 'progress_90', data: { progress: 90 } },
-                { name: 'video_error', data: { errorCode: 'TEST_ERROR' } },
-                { name: 'custom_event', data: { test: true } }
-            ];
-
-            logEvent('Начинаем тестирование всех событий...');
-            
-            events.forEach((event, index) => {
-                setTimeout(() => {
-                    ymIntegration.trackEvent(event.name, event.data);
-                    logEvent(`Тест событие: ${event.name}`, event.data);
-                }, index * 500); // Отправляем каждые 500мс
-            });
-
-            setTimeout(() => {
-                logEvent('Тестирование всех событий завершено!');
-            }, events.length * 500 + 1000);
-        }
-
-        // Обновление статуса
-        function updateStatus(message) {
-            document.getElementById('status').innerHTML = message;
-        }
-
-        // Логирование событий
-        function logEvent(message, data = {}) {
-            eventCounter++;
-            const timestamp = new Date().toLocaleTimeString();
-            const eventDiv = document.createElement('div');
-            eventDiv.className = 'event-item';
-            eventDiv.innerHTML = `
-                <strong>[${timestamp}] #${eventCounter}</strong> ${message}
-                ${Object.keys(data).length > 0 ? `<br><small>Данные: ${JSON.stringify(data)}</small>` : ''}
-            `;
-            
-            const logContainer = document.getElementById('eventLog');
-            logContainer.insertBefore(eventDiv, logContainer.firstChild);
-        }
-
-        // Переключение на iframe плеер
-        function useIframePlayer() {
-            if (!ymIntegration) {
-                alert('Сначала инициализируйте Яндекс Метрику');
-                return;
-            }
-
-            // Скрываем основной плеер и показываем iframe
-            document.getElementById('player').style.display = 'none';
-            document.getElementById('iframePlayer').style.display = 'block';
-            
-            // Настраиваем отслеживание событий для iframe
-            setupIframeEventTracking();
-            
-            updateStatus('✅ Используется iframe плеер с интеграцией Яндекс Метрики');
-            logEvent('Переключение на iframe плеер');
-        }
-
-        // Настройка отслеживания событий для iframe
-        function setupIframeEventTracking() {
-            const iframe = document.querySelector('#iframePlayer iframe');
-            
-            if (!iframe) return;
-
-            // Настраиваем отслеживание событий через postMessage
-            setupPostMessageTracking();
-
-            // Отправляем события при взаимодействии с iframe
-            iframe.addEventListener('load', () => {
-                ymIntegration.trackEvent('iframe_loaded');
-                logEvent('Событие: iframe_loaded');
-                
-                // Настраиваем отслеживание событий внутри iframe
-                setupIframePlayerEvents(iframe);
-                
-                // Имитируем события плеера
-                setTimeout(() => {
-                    ymIntegration.trackEvent('play');
-                    logEvent('Событие: play (имитация)');
-                }, 1000);
-                
-                setTimeout(() => {
-                    ymIntegration.trackEvent('progress_25', { progress: 25 });
-                    logEvent('Событие: progress_25% (имитация)');
-                }, 3000);
-                
-                setTimeout(() => {
-                    ymIntegration.trackEvent('progress_50', { progress: 50 });
-                    logEvent('Событие: progress_50% (имитация)');
-                }, 5000);
-            });
-
-            // Имитируем события воспроизведения
-            setTimeout(() => {
-                ymIntegration.trackEvent('iframe_ready');
-                logEvent('Событие: iframe_ready');
-            }, 2000);
-        }
-
-        // Настройка отслеживания через postMessage API
-        function setupPostMessageTracking() {
-            window.addEventListener('message', (event) => {
-                // Проверяем, что сообщение от Kinescope iframe
-                if (event.origin !== 'https://kinescope.dev') return;
-                
-                const data = event.data;
-                
-                if (data && data.type === 'kinescope_event') {
-                    const eventName = data.event;
-                    const eventData = data.data || {};
-                    
-                    // Отправляем событие в Яндекс Метрику
-                    ymIntegration.trackEvent(eventName, eventData);
-                    logEvent(`Событие: ${eventName} (из iframe postMessage)`, eventData);
-                }
-            });
-        }
-
-        // Настройка отслеживания событий внутри iframe
-        function setupIframePlayerEvents(iframe) {
-            try {
-                // Пытаемся получить доступ к содержимому iframe
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                
-                if (iframeDoc) {
-                    // Ищем видео элемент внутри iframe
-                    const video = iframeDoc.querySelector('video');
-                    
-                    if (video) {
-                        // Отслеживаем события видео
-                        video.addEventListener('play', () => {
-                            ymIntegration.trackEvent('play');
-                            logEvent('Событие: play (из iframe)');
-                        });
-                        
-                        video.addEventListener('pause', () => {
-                            ymIntegration.trackEvent('pause');
-                            logEvent('Событие: pause (из iframe)');
-                        });
-                        
-                        video.addEventListener('ended', () => {
-                            ymIntegration.trackEvent('ended');
-                            logEvent('Событие: ended (из iframe)');
-                        });
-                        
-                        video.addEventListener('timeupdate', () => {
-                            const currentTime = video.currentTime;
-                            const duration = video.duration;
-                            const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-                            
-                            // Отправляем события по прогрессу
-                            if (progress >= 25 && !video._ym25Sent) {
-                                ymIntegration.trackEvent('progress_25', { progress: 25 });
-                                logEvent('Событие: progress_25% (из iframe)');
-                                video._ym25Sent = true;
-                            }
-                            if (progress >= 50 && !video._ym50Sent) {
-                                ymIntegration.trackEvent('progress_50', { progress: 50 });
-                                logEvent('Событие: progress_50% (из iframe)');
-                                video._ym50Sent = true;
-                            }
-                            if (progress >= 75 && !video._ym75Sent) {
-                                ymIntegration.trackEvent('progress_75', { progress: 75 });
-                                logEvent('Событие: progress_75% (из iframe)');
-                                video._ym75Sent = true;
-                            }
-                            if (progress >= 90 && !video._ym90Sent) {
-                                ymIntegration.trackEvent('progress_90', { progress: 90 });
-                                logEvent('Событие: progress_90% (из iframe)');
-                                video._ym90Sent = true;
-                            }
-                        });
-                        
-                        logEvent('Отслеживание событий видео настроено в iframe');
-                    }
-                }
-            } catch (error) {
-                // CORS ошибка - это нормально для iframe с другого домена
-                logEvent('CORS ограничение для iframe (это нормально)', { error: error.message });
-            }
-        }
-
-        // Проверка статуса интеграции
-        function checkIntegrationStatus() {
-            const status = {
-                ymLoaded: typeof window.ym !== 'undefined',
-                ymIntegration: !!ymIntegration,
-                counterId: document.getElementById('counterId').value,
-                iframeLoaded: !!document.querySelector('#iframePlayer iframe'),
-                totalEvents: eventCounter
-            };
-
-            logEvent('Проверка статуса интеграции', status);
-            
-            if (status.ymLoaded && status.ymIntegration) {
-                updateStatus('✅ Интеграция работает корректно');
-                logEvent('✅ Все компоненты загружены и работают');
-            } else {
-                updateStatus('❌ Проблемы с интеграцией');
-                logEvent('❌ Обнаружены проблемы с интеграцией');
-            }
-        }
-
-        // Очистка лога
-        function clearLog() {
-            document.getElementById('eventLog').innerHTML = 'События будут отображаться здесь...';
-            eventCounter = 0;
-        }
-
-        // Автоматическая инициализация при загрузке страницы
-        window.addEventListener('load', () => {
-            logEvent('Страница загружена', { 
-                userAgent: navigator.userAgent,
-                timestamp: Date.now()
-            });
-            
-            // Проверяем загрузку скриптов через 2 секунды
-            setTimeout(() => {
-                if (checkScriptsLoaded()) {
-                    logEvent('✅ Яндекс Метрика загружена успешно');
-                    logEvent('ℹ️ Используется автономная версия без внешних скриптов Kinescope');
-                } else {
-                    logEvent('❌ Ошибка загрузки Яндекс Метрики', { 
-                        ym: typeof window.ym !== 'undefined'
-                    });
-                }
-            }, 2000);
-        });
-    </script>
-</body>
-</html>
+(async () => {
+try {
+const player = await playerEl.waitInstance();
+          console.log('waitInstance', player);
+          console.log('Referrer Policy на элементе:', playerEl.getAttribute('referrerpolicy'));
+          console.log('⚠️ Неожиданно! Плеер загрузился с referrerpolicy="no-referrer"');
+          console.log('Player:', player);
+} catch (error) {
+          console.error('Ошибка загрузки плеера:', error);
+          console.log('❌ Ожидаемая ошибка для referrerpolicy="no-referrer"');
+          console.error('Ошибка:', error);
+}
+})();
+</script>
