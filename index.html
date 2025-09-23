@@ -1,76 +1,60 @@
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Player - Referrer Policy на элементах</title>
-    <link 
-      rel="shortcut icon" 
-      href="https://sergesiluyanov.github.io/iframeelement.github.io/" 
-      referrerpolicy="origin"
-      type="image/x-icon" />
-    <title>testing</title>
-    <link rel="shortcut icon" href="https://example.com/favicon.ico" type="image/x-icon" />
-<style>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Player</title>
+    <link
+      rel="shortcut icon"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=="
+      type="image/x-icon"
+    />
+    <style>
       iframe[id^='sb__open-sandbox'] {
         top: 50%;
       }
-      iframe[id^='sb__open-sandbox'] { top: 50%; }
-      .status { padding: 10px; margin: 10px; border-radius: 5px; }
-      .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-      .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-</style>
-</head>
-<body>
-    <div class="status error">
-      <strong>Тест:</strong> referrerpolicy="no-referrer" - ❌ НЕ совместимо с Domain Restrictions
-    </div>
+    </style>
+  </head>
+  <body>
+    <script src="https://player.kinescope.dev/v2.168.5/elements/kinescope-iframe-player.js"></script>
+    <!-- <script src="https://player.kinescope.io/latest/elements/kinescope-iframe-player.js"></script> -->
 
-<script 
-src="https://player.kinescope.dev/v2.166.1/elements/kinescope-iframe-player.js"
-      referrerpolicy="strict-origin-when-cross-origin">
-      referrerpolicy="no-referrer">
-</script>
-
-<script>
-window.KinescopeIframePlayerConfig = {
-...window.KinescopeIframePlayerConfig,
-player: {
+    <script>
+      window.KinescopeIframePlayerConfig = {
+        ...window.KinescopeIframePlayerConfig,
+        player: {
           behavior: {
-            localStorage: true,
+            localStorage: false,
           },
-          behavior: { localStorage: true },
-ui: { playbackRateButton: true },
-},
-};
-@@ -35,25 +34,23 @@
-<kinescope-iframe-player
-id="player"
-t="3"
-      referrerpolicy="strict-origin-when-cross-origin"
-      style="background-color: greenyellow; border-radius: 20px">
-      referrerpolicy="no-referrer"
-      style="background-color: #f8d7da; border-radius: 20px; padding: 20px;">
-</kinescope-iframe-player>
+          ui: { playbackRateButton: true },
+        },
+      };
+    </script>
 
-<script>
-const playerEl = document.getElementById('player');
+    <kinescope-iframe-player
+      id="player"
+      t="3"
+      style="background-color: greenyellow; border-radius: 20px"
+    ></kinescope-iframe-player>
+
+    <script>
+      const playerEl = document.getElementById('player');
+
+      // Object.values(playerEl.Events).forEach((type) => {
+      //   playerEl.addEventListener(type, (event) => {
+      //     console.log(event);
+      //   });
+      // });
 
       playerEl.setAttribute(
         'url',
-        'https://kinescope.dev/embed/4v3Wqopuq4hhy1VhZH3GVU'
+        'https://kinescope.dev/pl/3aYVyQSMZqEpNH6dkgttGY'
+        // 'https://kinescope.io/nGnttRhDHufMwr8YZyEeYw'
       );
-      playerEl.setAttribute('url', 'https://kinescope.dev/embed/4v3Wqopuq4hhy1VhZH3GVU');
 
-(async () => {
-try {
-const player = await playerEl.waitInstance();
-          console.log('waitInstance', player);
-          console.log('Referrer Policy на элементе:', playerEl.getAttribute('referrerpolicy'));
-          console.log('⚠️ Неожиданно! Плеер загрузился с referrerpolicy="no-referrer"');
-          console.log('Player:', player);
-} catch (error) {
-          console.error('Ошибка загрузки плеера:', error);
-          console.log('❌ Ожидаемая ошибка для referrerpolicy="no-referrer"');
-          console.error('Ошибка:', error);
-}
-})();
-</script>
+      (async () => {
+        const player = await playerEl.waitInstance();
+        console.log('waitInstance', player);
+      })();
+    </script>
+  </body>
+</html>
