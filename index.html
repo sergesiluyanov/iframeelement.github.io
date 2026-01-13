@@ -5,56 +5,70 @@
     <title>Player</title>
     <link
       rel="shortcut icon"
-      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=="
+      href="https://static.tildacdn.com/tild6535-3931-4534-a462-643438616464/favicon.ico"
       type="image/x-icon"
     />
-    <style>
-      iframe[id^='sb__open-sandbox'] {
-        top: 50%;
+    <script>
+        function createPlayer() {
+        const Player = Kinescope.IframePlayer;
+        return Player.create('player', {
+          url: 'https://kinescope.dev/pl/7x9CweRisf6cpJAHjn1hpV',
+          size: { width: '100%', height: 400 },
+          behaviour: {
+            // preload: true,
+            // autoPlay: true,
+            // crossOrigin: 'use-credentials',
+          },
+          settings: {
+            // driverSettings: {
+            //   hls: { playback: 'native' },
+            // },
+            // metrics: {
+            //   interval: 2000,
+            // },
+          },
+          ui: {
+            liveLabel: true
+          },
+          playlist: [{
+            drm: {
+              widevine: {
+                detectRobustness: false
+              }
+            },
+            liveSync: true,
+            dataPolling: {
+              url: 'https://kinescope.io/0cv2E3qy1j9XBa4vttgbHb/player-events.json'
+            },
+            cta: [{
+              id: '04',
+              type: 'banner',
+              title: 'Title',
+              description: 'Description',
+              position: 'bottom-center',
+              variant: 'horizontal',
+              trigger: { timePoints: [0] },
+              button: { text: 'Press here', url: 'https://www.youtube.com/' }
+            }]
+          }]
+        }).then((player) => {
+          console.log('player initialized');
+        });
       }
-    </style>
+
+      function onKinescopeIframeAPIReady(Player) {
+        console.log('iframe api ready', Player);
+        createPlayer();
+      }
+    </script>
+    <script
+      async
+      src="https://player.kinescope.dev/v2.175.5/iframe.player.js"
+    ></script>
   </head>
   <body>
-    <script src="https://player.kinescope.dev/v2.171.0/elements/kinescope-iframe-player.js"></script>
-    <!-- <script src="https://player.kinescope.io/latest/elements/kinescope-iframe-player.js"></script> -->
-
-    <script>
-      window.KinescopeIframePlayerConfig = {
-        ...window.KinescopeIframePlayerConfig,
-        player: {
-          behavior: {
-            localStorage: true,
-          },
-          ui: { playbackRateButton: true },
-        },
-      };
-    </script>
-
-    <kinescope-iframe-player
-      id="player"
-      t="3"
-      style="background-color: greenyellow; border-radius: 20px"
-    ></kinescope-iframe-player>
-
-    <script>
-      const playerEl = document.getElementById('player');
-
-      // Object.values(playerEl.Events).forEach((type) => {
-      //   playerEl.addEventListener(type, (event) => {
-      //     console.log(event);
-      //   });
-      // });
-
-      playerEl.setAttribute(
-        'url',
-        'https://kinescope.dev/09CGUhLZc4dCRDFUU5RGeq'
-        // 'https://kinescope.io/nGnttRhDHufMwr8YZyEeYw'
-      );
-
-      (async () => {
-        const player = await playerEl.waitInstance();
-        console.log('waitInstance', player);
-      })();
-    </script>
+    <div style="padding: 20px;">
+      <div id="player"></div>
+    </div>
   </body>
 </html>
